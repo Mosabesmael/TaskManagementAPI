@@ -16,4 +16,18 @@ public class TaskItem
     {
         return $"[{Id}] {Title} - {(IsCompleted ? "✓" : "○")}";
     }
+
+    /// احسب كام يوم متبقي للـ deadline
+    public int ? DaysUntilDue()
+    {
+        if (DaysUntilDue == null) return null;
+
+        return (int)(DueDate.Value.Date - DateTime.Now.Date).TotalDays;
+    }
+
+    /// شُوف لو المهمة متأخرة
+    public bool IsOverdue()
+    {
+        return DueDate < DateTime.Now && !IsCompleted;
+    }
 }
