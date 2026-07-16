@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TaskManagementAPI.Interfaces;
 
 namespace TaskManagementAPI.Repositories;
 
-public class Repository<T>
+public class Repository<T> : IRepository<T> where T : class
 {
     private List<T> _items = new();
 
     public void Add(T item)
     {
+        if (item == null) throw new ArgumentNullException(nameof(item), "Item cannot be null");
         _items.Add(item);
     }
 
@@ -24,6 +26,11 @@ public class Repository<T>
     }
 
     public int Count => _items.Count;
+
+    public bool Remove(T item)
+    {
+        return _items.Remove(item);
+    }
 
     public void PrintAll()
     {
